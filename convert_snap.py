@@ -25,6 +25,7 @@ for message in all_messages:
 
 # group double-messages
 for person, chat in chats.items():
+    print(person)
     new_conversation = []
     current = chat[0].get('To') is not None
     components = []

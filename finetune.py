@@ -34,7 +34,7 @@ TARGET_MODULES = [
     "q_proj",
     "v_proj",
 ]
-DATA_PATH = "alpaca_data_cleaned.json"
+DATA_PATH = "data-converted/full.json"
 OUTPUT_DIR = "lora-alpaca"
 
 device_map = "auto"
@@ -70,25 +70,25 @@ data = load_dataset("json", data_files=DATA_PATH)
 
 def generate_prompt(data_point):
     # sorry about the formatting disaster gotta move fast
-    if data_point["input"]:
-        return f"""Below is an instruction that describes a task, paired with an input that provides further context. Write a response that appropriately completes the request.
+    if data_point['author'] is not None:
+        return f"""Below is a transcript of received text messages. Write an appropriate response to these messages.
 
-### Instruction:
-{data_point["instruction"]}
+### From:
+{data_point["author"]}
 
-### Input:
-{data_point["input"]}
+### Message:
+{data_point["sent"]}
 
 ### Response:
-{data_point["output"]}"""
+{data_point["responded"]}"""
     else:
-        return f"""Below is an instruction that describes a task. Write a response that appropriately completes the request.
+        return f"""Below is a transcript of received text messages. Write an appropriate response to these messages.
 
-### Instruction:
-{data_point["instruction"]}
+### Message:
+{data_point["sent"]}
 
 ### Response:
-{data_point["output"]}"""
+{data_point["responded"]}"""
 
 
 def tokenize(prompt):
