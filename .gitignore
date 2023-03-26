@@ -8,3 +8,7 @@ upload.py
 lora-**
 *ckpt
 wandb
+data/
+data-converted/
+weights/
+unconverted-weights/
